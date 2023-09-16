@@ -1,0 +1,22 @@
+{
+  "name": "run_mockserver",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "James D Bloom",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "commander": "^11.0.0",
+    "mockserver-client": "5.15.0",
+    "mockserver-node": "5.15.0",
+    "yaml": "^2.3.2"
+  },
+  "devDependencies": {
+    "eslint": "^8.49.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.28.1"
+  }
+}

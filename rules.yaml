@@ -1,0 +1,33 @@
+expectations:
+  - name: CUP Get card status
+    request:
+      method: GET # string or regex
+      path: /status
+      # headers:
+      #   Content-Type: application/json        
+      body: { "cardId": 1 }      
+    delay: 5
+    response:
+      statusCode: 200
+      body:
+        type: raw # file or raw 
+        value: { "status": "OK" }
+
+  - name: CUP Get card status2
+    request:
+      method: POST # string or regexp
+      path: /status2
+      # headers:
+      #   Content-Type: application/json        
+      body: { "cardId": 1 }      
+    delay: 5
+    response:
+      statusCode: 200
+      body:
+        type: file # file or raw 
+        value: mapping/getcard.json
+
+forward:
+  scheme: HTTP
+  host: localhost
+  port: 8080
