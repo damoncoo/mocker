@@ -1,39 +1,42 @@
-const fs = require('fs');
+const fs = require('fs')
 
 function createHttpRequest(request) {
   return {
     method: request.method || 'GET',
     path: request.path,
     headers: request.headers || {},
-  };
+  }
 }
 
-function createHttpResponse(response) {
+function createHttpResponse(response, headers) {
   if (!response) {
-    return {};
+    return {}
   }
-  return {
+  const res = {
     statusCode: response.statusCode || 200,
-    headers: response.headers || {},
+    headers: Object.assign(response.headers || {}, headers),
     body: response.body.type === 'file' ? fs.readFileSync(response.body.value, 'utf8') : response.body.value,
-  };
+  }
+  if (response.delay) {
+    res.delay = {
+      timeUnit: 'SECONDS',
+      value: response.delay,
+    }
+  }
+  return res
 }
 
 function convertToMockServerExpectation(config) {
-  if (!config) {
-    throw new Error('Please specify "rules" in your config');
-  }
-
   let rules = config.expectations.map((expectation) => {
-    const request = expectation.request || {};
-    const response = expectation.response || {};
+    const request = expectation.request || {}
+    const response = expectation.response || {}
     const rule = {
       httpRequest: createHttpRequest(request),
-      httpResponse: createHttpResponse(response),
+      httpResponse: createHttpResponse(response, config.defaults.headers),
       times: { unlimited: true },
-    };
-    return rule;
-  });
+    }
+    return rule
+  })
   if (config.forward != null) {
     rules = [...rules, {
       httpRequest: {
@@ -44,9 +47,9 @@ function convertToMockServerExpectation(config) {
         port: config.forward.port,
         scheme: config.forward.scheme,
       },
-    }];
+    }]
   }
-  return rules;
+  return rules
 }
 
-module.exports.convertToMockServerExpectation = convertToMockServerExpectation;
+module.exports.convertToMockServerExpectation = convertToMockServerExpectation

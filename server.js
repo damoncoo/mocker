@@ -1,4 +1,6 @@
-const mockserver = require('mockserver-node');
+const mockserver = require('mockserver-node')
+const client = require('./client')
+const proxy = require('./proxy')
 
 mockserver
   .start_mockserver({
@@ -14,12 +16,14 @@ mockserver
   })
   .then(
     () => {
-      console.log('started MockServer');
+      console.log('started MockServer')
+      client.startClient()
+      proxy.startProxy()
     },
     (error) => {
-      console.log(JSON.stringify(error, null, '  '));
+      console.log(JSON.stringify(error, null, '  '))
     },
-  );
+  )
 
 mockserver.start_mockserver({
   serverPort: 1080,
@@ -28,4 +32,4 @@ mockserver.start_mockserver({
         + '-Dmockserver.corsAllowHeaders="Allow, Content-Encoding, Content-Length, Content-Type, ETag, Expires, Last-Modified, Location, Server, Vary, Authorization" '
         + '-Dmockserver.corsAllowCredentials="true" '
         + '-Dmockserver.corsMaxAgeInSeconds="300"',
-});
+})

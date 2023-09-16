@@ -23,5 +23,6 @@ module.exports = {
   },
   rules: {
     'no-console': 0,
+    semi: [2, 'never'],
   },
-};
+}
