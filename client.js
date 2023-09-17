@@ -3,6 +3,7 @@ const yaml = require('yaml')
 const fs = require('fs')
 const { mockServerClient } = require('mockserver-client')
 const rules = require('./rules')
+const proxy = require('./proxy')
 
 program
   .option('-r, --rules <path>', 'rules file path', 'rules.yaml')
@@ -17,7 +18,6 @@ function parseYaml(filePath) {
 }
 
 async function callCreateExpectations(expectations) {
-  // const { cert: caCertFilePath } = program.opts()
   const result = await mockServerClient('localhost', process.env.PORT || 1080).mockAnyResponse(expectations)
   console.log(result)
   console.log('expectation created')
@@ -28,6 +28,9 @@ async function startClient() {
   const config = parseYaml(rulesFilePath)
   const expectations = rules.convertToMockServerExpectation(config)
   await callCreateExpectations(expectations)
+
+  const { proxiedUrl, http_proxy: httpProxy } = config.defaults
+  proxy.startProxy(proxiedUrl, httpProxy)
 }
 
-module.exports.startClient = startClient
+startClient()

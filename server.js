@@ -1,6 +1,4 @@
 const mockserver = require('mockserver-node')
-const client = require('./client')
-const proxy = require('./proxy')
 
 mockserver
   .start_mockserver({
@@ -17,8 +15,6 @@ mockserver
   .then(
     () => {
       console.log('started MockServer')
-      client.startClient()
-      proxy.startProxy()
     },
     (error) => {
       console.log(JSON.stringify(error, null, '  '))

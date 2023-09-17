@@ -8,7 +8,7 @@
     "proxy": "node proxy.js",
     "client": "node client.js"
   },
-  "author": "James D Bloom",
+  "author": "Damon Cheng",
   "license": "Apache-2.0",
   "dependencies": {
     "commander": "^11.0.0",
@@ -16,6 +16,7 @@
     "https-proxy-agent": "^7.0.2",
     "mockserver-client": "5.15.0",
     "mockserver-node": "5.15.0",
+    "proxy-agent": "^6.3.1",
     "request": "^2.88.2",
     "yaml": "^2.3.2"
   },

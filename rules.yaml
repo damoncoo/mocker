@@ -35,3 +35,5 @@ forward:
 defaults:
   headers: 
     Content-Type: application/json
+  proxiedUrl: https://jsonplaceholder.typicode.com
+  http_proxy: http://127.0.0.1:7890
