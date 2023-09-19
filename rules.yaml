@@ -26,6 +26,7 @@ expectations:
       body:
         type: file # file or raw 
         value: mapping/getcard.json
+    times: 1
 
 forward:
   scheme: HTTP

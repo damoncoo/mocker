@@ -30,10 +30,11 @@ function convertToMockServerExpectation(config) {
   let rules = config.expectations.map((expectation) => {
     const request = expectation.request || {}
     const response = expectation.response || {}
+    const remainingTimes = expectation.times || 0
     const rule = {
       httpRequest: createHttpRequest(request),
       httpResponse: createHttpResponse(response, config.defaults.headers),
-      times: { unlimited: true },
+      times: remainingTimes > 0 ? { unlimited: false, remainingTimes } : { unlimited: true },
     }
     return rule
   })
